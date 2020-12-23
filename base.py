@@ -35,6 +35,6 @@ class Movies(db.Model):
         db.session.commit()
 
     # Method to delete data from database
-    def delete_():
+    def delete_(self):
         db.session.delete(self)
         db.session.commit()

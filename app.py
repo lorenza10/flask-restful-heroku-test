@@ -1,3 +1,4 @@
+from base import Movies, db
 from flask import Flask
 from flask_restful import Resource, reqparse, Api
 
@@ -16,7 +17,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
-from base import Movies, db
 db.init_app(app)
 app.app_context().push()
 db.create_all()
@@ -32,8 +32,8 @@ class Movies_List(Resource):
                         help='Director of the movie')
     parser.add_argument('genre', type=str, required=False,
                         help='Genre of the movie')
-    parser.add_argument('collection', type=int,
-                        required=True, help='Gross of the movie')
+    parser.add_argument('collection', type=int, required=True,
+                        help='Gross collection of the movie')
 
     # Get method
     def get(self, movie):
@@ -49,7 +49,6 @@ class Movies_List(Resource):
         args = Movies_List.parser.parse_args()
         item = Movies(movie, args['director'],
                       args['genre'], args['collection'])
-
         item.save_to()
         return item.json()
 
